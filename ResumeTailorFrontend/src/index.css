@@ -1,0 +1,69 @@
+@import "tailwindcss";
+
+@plugin "tailwindcss-animate";
+@custom-variant dark (&:is(.dark *));
+
+/* === AZURE RADIANCE DARK THEME === */
+:root {
+  --radius: 0.625rem;
+
+  /* Palette */
+  --azure-50:  #EEF8FF;
+  --azure-100: #D8EFFF;
+  --azure-200: #BAE3FF;
+  --azure-300: #8BD5FF;
+  --azure-400: #55BBFF;
+  --azure-500: #2E9BFF;
+  --azure-600: #0E77F9;
+  --azure-700: #01051c;
+  --azure-800: #1450B9;
+  --azure-900: #164792;
+  --azure-950: #132C58;
+
+  /* Base colors */
+  --background: #061525;               /* Deep navy background */
+  --foreground: #E6F1FF;               /* Soft white text */
+
+  --card: #0b111c;                     /* Slightly lighter than background */
+  --card-foreground: #E6F1FF;
+
+  --primary: var(--azure-600);         /* Accent blue */
+  --primary-foreground: #ffffff;
+
+  --muted: #10141b;
+  --muted-foreground: var(--azure-300);
+
+  --border: #1A1F2A;
+  --input: #1E2735;
+  --ring: var(--azure-500);
+
+  /* New: surface tone for textarea & content panels */
+  --surface: color-mix(in oklch, var(--azure-700) 40%, white 15%);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-surface: var(--surface);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+  }
+}
+
+

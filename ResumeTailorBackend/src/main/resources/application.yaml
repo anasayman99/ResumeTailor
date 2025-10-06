@@ -1,0 +1,25 @@
+spring.application.name:
+  ResumeTailorBackend
+
+server:
+  port: 8080
+
+openai:
+  api:
+    key: ${OPENAI_API_KEY}
+  model: gpt-4o-mini
+
+
+spring:
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
+      - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+cors:
+  allowed-origin: ${ALLOWED_ORIGIN:http://localhost:5173}
