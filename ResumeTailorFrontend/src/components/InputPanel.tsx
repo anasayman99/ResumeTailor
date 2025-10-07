@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { Loader2 } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -15,6 +16,24 @@ export default function InputPanel({ onResponse }: InputPanelProps) {
     const [jobDescription, setJobDescription] = useState("");
     const [file, setFile] = useState<File | null>(null);
     const [loading, setLoading] = useState(false);
+
+    /* 💾 Load saved text from localStorage on mount */
+    useEffect(() => {
+        const savedResume = localStorage.getItem("resumeText");
+        const savedJob = localStorage.getItem("jobDescription");
+        if (savedResume) setResumeText(savedResume);
+        if (savedJob) setJobDescription(savedJob);
+    }, []);
+
+    /* 💾 Save resume text on change */
+    useEffect(() => {
+        localStorage.setItem("resumeText", resumeText);
+    }, [resumeText]);
+
+    /* 💾 Save job description on change */
+    useEffect(() => {
+        localStorage.setItem("jobDescription", jobDescription);
+    }, [jobDescription]);
 
     const handleSubmit = async () => {
         setLoading(true);
@@ -104,9 +123,16 @@ export default function InputPanel({ onResponse }: InputPanelProps) {
                 <Button
                     onClick={handleSubmit}
                     disabled={loading}
-                    className="w-full bg-primary text-primary-foreground hover:bg-primary/90 shadow-md hover:shadow-lg transition-all"
+                    className="w-full bg-primary text-primary-foreground hover:bg-primary/90 shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2"
                 >
-                    {loading ? "Analyzing..." : "Submit"}
+                    {loading ? (
+                        <>
+                            <Loader2 className="h-4 w-4 animate-spin" />
+                            Analyzing...
+                        </>
+                    ) : (
+                        "Submit"
+                    )}
                 </Button>
             </CardContent>
         </Card>
