@@ -64,11 +64,22 @@ export default function ResultTabs({ data }: ResultTabsProps) {
         pdf.setFontSize(12);
 
         const wrapped = pdf.splitTextToSize(text.trim(), maxWidth);
+
         wrapped.forEach((line: string) => {
             if (y > pdf.internal.pageSize.getHeight() - margin) {
                 pdf.addPage();
                 y = margin;
             }
+
+            const trimmed = line.trim();
+
+            // 🔹 Detect ALL-CAPS section headers like "EXPERIENCE" or "TECHNICAL SKILLS"
+            if (/^[A-Z\s]{3,}$/.test(trimmed)) {
+                pdf.setFont("times", "bold");
+            } else {
+                pdf.setFont("times", "normal");
+            }
+
             pdf.text(line, margin, y);
             y += lineHeight;
         });
